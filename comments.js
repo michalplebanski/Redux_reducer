@@ -7,23 +7,14 @@ import { THUMB_DOWN } from "./actions";
 export const comments = (state = initialState, action) => {
 	switch (action.type) {
 		case ADD_COMMENT:
-			return Object.assign({}, state, {
-				comments: [
-					{
-						id: action.id,
-						text: action.text,
-						votesUp: 0,
-						votesDown: 0
-					},
-					...state
-				]
-			});
+			return  [
+				{
+					id: action.id,
+					text: action.text,
+					votes: 0,
+				}, ...state.comments];
 		case REMOVE_COMMENT:
-			return Object.assign({}, state, {
-				comments: state.comments.filter(
-					comment => comment.id !== action.id
-				)
-			});
+			return state.comments.filter(comment => comment.id !== action.id);	
 		case EDIT_COMMENT:
 			return state.comments.map(comment => {
 				if (comment.id === action.id) {
@@ -32,7 +23,7 @@ export const comments = (state = initialState, action) => {
 				}
 				return comment;
 			});
-		case THUMB_UP_COMMENT:
+		case THUMB_UP:
 			return state.map(comment => {
 				if (comment.id === action.id) {
 					return {
@@ -42,7 +33,7 @@ export const comments = (state = initialState, action) => {
 				}
 				return comment;
 			});
-		case THUMB_DOWN_COMMENT:
+		case THUMB_DOWNT:
 			return state.map(comment => {
 				if (comment.id === action.id) {
 					return {
